@@ -1,4 +1,4 @@
-Two programs, for two separate Ardino's, to work together.
+Two programs, for two separate Ardino's, and a scraper, to work together.
 
 Send
 ====
@@ -17,4 +17,11 @@ Receive
 =======
 
 Reads the signal from the corresponding RF receiver. Lights a light appropriately.
+
+
+scraper.js
+==========
+
+For use on ScraperWiki to scrape Liverpool bin collection times, and generate
+the file that Send needs. The scraper is written in Node.
 
