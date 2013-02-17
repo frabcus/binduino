@@ -72,8 +72,8 @@ fs.readFile('postcode.txt', 'utf8', function (err,data) {
         var end_range = next_recycling.clone().add("hours", 12) // stop midday of the day
         var start_range = next_recycling.clone().subtract("hours", 12) // start midday the day before
         var now = moment()
-now = moment("2013-02-25 10:00:00")
-console.log("faked now!", now.format())
+//now = moment("2013-02-25 10:00:00")
+//console.log("faked now!", now.format())
         console.log("light bin range", +start_range, +end_range, +now)
 
         var light_bin = "-"
