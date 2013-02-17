@@ -1,9 +1,21 @@
-Two programs, for two separate Ardino's, and a scraper, to work together.
+A scraper and two Arduino programs to work together.
+
+
+scraper.js
+==========
+
+For use on ScraperWiki to scrape Liverpool bin collection times, and generate
+a small file 
+which has simple
+instructions as to whether my bin needs emptying tomorrow morning or not
+
+that Send reads. The scraper is written in Node.
+
 
 Send
 ====
 
-Connects the Arduino to the Internet using an Ehternet shield. I plug this one
+Connects an Arduino to the Internet using an Ehternet shield. I plug this one
 in in my living room, where the router is.
 
 Polls, using HTTP, a particular file on ScraperWiki, which has simple
@@ -18,10 +30,4 @@ Receive
 
 Reads the signal from the corresponding RF receiver. Lights a light appropriately.
 
-
-scraper.js
-==========
-
-For use on ScraperWiki to scrape Liverpool bin collection times, and generate
-the file that Send needs. The scraper is written in Node.
 
