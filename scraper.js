@@ -3,13 +3,27 @@
 var fs = require('fs')
 var sqlite3 = require('sqlite3')
 var async = require('async')
-var http = require('http');
-var request = require('request');
-var jsdom = require('jsdom');
-var assert = require('assert');
+var http = require('http')
+var request = require('request')
+var jsdom = require('jsdom')
+var assert = require('assert')
+var moment = require('moment')
+var db
 
-var parse_row = function(row, type) {
+// Read one row of data
+var parse_row = function($, row, type) {
+  row = row.map(function(i, e) {
+    return $(e).text().trim()
+  }).get()
 
+  // XXX could change this to just use moment(row[0]) which calls Date.parse, esp.
+  // if they change the formatting a lot
+  var next_date = moment(row[0], "dddd D MMMM YYYY").format("YYYY-MM-DD")
+
+  console.log(type, next_date)
+  db.run("INSERT OR REPLACE INTO bin_dates (type, next) values (?, ?)", type, next_date)
+
+  return next_date
 }
 
 // Read JSON file with postcode and house name
@@ -25,8 +39,8 @@ fs.readFile('postcode.txt', 'utf8', function (err,data) {
   console.log("Postcode:", postcode, "House:", house)
 
   // Create the SQLite database if necessary
-  var db = new sqlite3.Database('scraperwiki.sqlite')
-  db.run("CREATE TABLE IF NOT EXISTS bin_dates (rubbish_type TEXT, date TEXT)")
+  db = new sqlite3.Database('scraperwiki.sqlite')
+  db.run("CREATE TABLE IF NOT EXISTS bin_dates (type TEXT, next TEXT, PRIMARY KEY (type))")
 
   // Get the Liverpool council web page
   var url = "http://liverpool.gov.uk/bins-and-recycling/bin-collection-dates-and-times/results.aspx?housenumber=" + house + "&postcode=" + postcode + "&btnSend="
@@ -40,7 +54,7 @@ fs.readFile('postcode.txt', 'utf8', function (err,data) {
         html: body,
         scripts: [ 'http://code.jquery.com/jquery-1.5.min.js' ]
       }, function (err, window) {
-        var $ = window.jQuery;
+        var $ = window.jQuery
 
         // check header is as we expect
         var header = $('.bins thead th').map(function(i, e) {
@@ -48,8 +62,34 @@ fs.readFile('postcode.txt', 'utf8', function (err,data) {
         }).get()
         console.log(header)
         assert.deepEqual(header, [ '', 'Next date', '2nd date', 'Third date' ])
-//        console.log($('.Refuse').html());
-      }); 
+
+        // there's a th as well which we ignore for now
+        parse_row($, $('.Refuse td'), 'refuse')
+        var next_recycling = parse_row($, $('.Recycling td'), 'recycling')
+
+        // should the bin light be lit?
+        next_recycling = moment(next_recycling, "YYYY-MM-DD")
+        var end_range = next_recycling.clone().add("hours", 12) // stop midday of the day
+        var start_range = next_recycling.clone().subtract("hours", 12) // start midday the day before
+        var now = moment()
+now = moment("2013-02-25 10:00:00")
+console.log("faked now!", now.format())
+        console.log("light bin range", +start_range, +end_range, +now)
+
+        var light_bin = "-"
+        if (start_range <= now && now <= end_range) {
+          light_bin = "R"
+        }
+        var fs = require('fs');
+        fs.writeFile("http/light.state", light_bin, function(err) {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log("Set light.state to", light_bin);
+            }
+        }); 
+
+      }) 
 
     }
   })
