@@ -15,13 +15,12 @@ The scraper is written in Node.js.
 send
 ====
 
-Connects an Arduino to the Internet using an Ehternet shield. I plug this one
+Connects an Arduino to the Internet using an Ethernet shield. I plug this one
 in in my living room, where the router is.
 
-Polls, using HTTP, a particular file on ScraperWiki, which has simple
-instructions as to whether my bin needs emptying tomorrow morning or not.
+Polls, using HTTP, the file on ScraperWiki that scraper.js (above) makes.
 
-Sends that sate over a simple 434Mhz RF receiver, using the VirtualWire
+Sends that state over a simple 434Mhz RF receiver, using the VirtualWire
 protocol for error prevention so it works through the walls of my house. Note
 that this is broadcast only - it's a one way protocol.
 
@@ -30,7 +29,7 @@ receive
 =======
 
 Reads the signal from the corresponding RF receiver. Lights a light
-appropriately.  This one goes on an Arduino next to the bin, and have some EL
+appropriately. This one goes on an Arduino next to the bin, and have some EL
 wire to light it up.
 
 
