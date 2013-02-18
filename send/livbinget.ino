@@ -32,8 +32,8 @@ void livbinget_setup()
   while (Ethernet.begin(mac) != 1)
   {
     Serial.println("Ethernet.begin: failed, trying again in 10 seconds");
+    flashDebug(3, 200, 100);
     delay(10000);
-    flashDebug(3, 100, 50);
   }  
   Serial.println("Ethernet.begin: ok");
 }
