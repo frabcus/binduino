@@ -10,7 +10,36 @@ var assert = require('assert')
 var moment = require('moment')
 var db
 
-// Read one row of data
+
+// Write out the file which the Arduino's read - it sets:
+// - light off
+// R recycling light on
+var write_light_state = function(next_recycling) {
+  // should the bin light be lit?
+  next_recycling = moment(next_recycling, "YYYY-MM-DD")
+  var end_range = next_recycling.clone().add("hours", 12) // stop midday of the day
+  var start_range = next_recycling.clone().subtract("hours", 12) // start midday the day before
+  var now = moment()
+
+  //now = moment("2013-02-25 10:00:00")
+  //console.log("faked now!", now.format())
+  console.log("light bin range", +start_range, +end_range, +now)
+
+  var light_bin = "-"
+  if (start_range <= now && now <= end_range) {
+    light_bin = "R"
+  }
+  var fs = require('fs');
+  fs.writeFile("http/light.state", light_bin, function(err) {
+      if(err) {
+          console.log(err);
+      } else {
+          console.log("Set light.state to", light_bin);
+      }
+  }); 
+}
+
+// Read one row of data from table
 var parse_row = function($, row, type) {
   row = row.map(function(i, e) {
     return $(e).text().trim()
@@ -26,15 +55,42 @@ var parse_row = function($, row, type) {
   return next_date
 }
 
-// Read JSON file with postcode and house name
-var postcode, house
-fs.readFile('postcode.txt', 'utf8', function (err,data) {
+// Read one whole page - which has a table of recycling collections for a house
+var parse_page = function (error, response, body) {
+  if (error || response.statusCode != 200) {
+    return console.log(err)
+  } 
+
+  // parse using jQuery via jsdom
+  jsdom.env({
+    html: body,
+    scripts: [ 'http://code.jquery.com/jquery-1.5.min.js' ]
+  }, function (err, window) {
+    var $ = window.jQuery
+
+    // check header is as we expect
+    var header = $('.bins thead th').map(function(i, e) {
+      return $(e).text().trim()
+    }).get()
+    console.log(header)
+    assert.deepEqual(header, [ '', 'Next date', '2nd date', 'Third date' ])
+
+    // there's a th as well which we ignore for now
+    parse_row($, $('.Refuse td'), 'refuse')
+    var next_recycling = parse_row($, $('.Recycling td'), 'recycling')
+
+    write_light_state(next_recycling)
+  })
+}
+
+// Get the page with the data on from Liverpool Council
+var get_bin_collections = function(err,data) {
   if (err) {
     return console.log(err)
   }
   var json = JSON.parse(data)
-  postcode = json['postcode']
-  house = json['house']
+  var postcode = json['postcode']
+  var house = json['house']
 
   console.log("Postcode:", postcode, "House:", house)
 
@@ -45,53 +101,10 @@ fs.readFile('postcode.txt', 'utf8', function (err,data) {
   // Get the Liverpool council web page
   var url = "http://liverpool.gov.uk/bins-and-recycling/bin-collection-dates-and-times/results.aspx?housenumber=" + house + "&postcode=" + postcode + "&btnSend="
   console.log("Getting URL:", url)
-  request(url, function (error, response, body) {
-    if (error || response.statusCode != 200) {
-      console.log(err)
-    } else {
-      // Parse the body
-      jsdom.env({
-        html: body,
-        scripts: [ 'http://code.jquery.com/jquery-1.5.min.js' ]
-      }, function (err, window) {
-        var $ = window.jQuery
+  request(url, parse_page)
+}
 
-        // check header is as we expect
-        var header = $('.bins thead th').map(function(i, e) {
-          return $(e).text().trim()
-        }).get()
-        console.log(header)
-        assert.deepEqual(header, [ '', 'Next date', '2nd date', 'Third date' ])
+// Read JSON file with postcode and house name
+var postcode, house
+fs.readFile('postcode.txt', 'utf8', get_bin_collections)
 
-        // there's a th as well which we ignore for now
-        parse_row($, $('.Refuse td'), 'refuse')
-        var next_recycling = parse_row($, $('.Recycling td'), 'recycling')
-
-        // should the bin light be lit?
-        next_recycling = moment(next_recycling, "YYYY-MM-DD")
-        var end_range = next_recycling.clone().add("hours", 12) // stop midday of the day
-        var start_range = next_recycling.clone().subtract("hours", 12) // start midday the day before
-        var now = moment()
-//now = moment("2013-02-25 10:00:00")
-//console.log("faked now!", now.format())
-        console.log("light bin range", +start_range, +end_range, +now)
-
-        var light_bin = "-"
-        if (start_range <= now && now <= end_range) {
-          light_bin = "R"
-        }
-        var fs = require('fs');
-        fs.writeFile("http/light.state", light_bin, function(err) {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log("Set light.state to", light_bin);
-            }
-        }); 
-
-      }) 
-
-    }
-  })
-
-})
