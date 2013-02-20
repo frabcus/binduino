@@ -8,13 +8,20 @@ var request = require('request')
 var jsdom = require('jsdom')
 var assert = require('assert')
 var moment = require('moment')
-var db
+var events = require('events')
+var util = require('util')
 
+// Setup database
+var db = new sqlite3.Database('scraperwiki.sqlite')
+db.run("CREATE TABLE IF NOT EXISTS bin_dates (type TEXT, next TEXT, PRIMARY KEY (type))")
+
+// Setup events framework
+var ee = new events.EventEmitter()
 
 // Write out the file which the Arduino's read - it sets:
 // - light off
 // R recycling light on
-var write_light_state = function(next_recycling) {
+ee.on('newNextRecycling', function(next_recycling) {
   // should the bin light be lit?
   next_recycling = moment(next_recycling, "YYYY-MM-DD")
   var end_range = next_recycling.clone().add("hours", 12) // stop midday of the day
@@ -37,7 +44,7 @@ var write_light_state = function(next_recycling) {
           console.log("Set light.state to", light_bin);
       }
   }); 
-}
+})
 
 // Read one row of data from table
 var parse_row = function($, row, type) {
@@ -76,10 +83,10 @@ var parse_page = function (error, response, body) {
     assert.deepEqual(header, [ '', 'Next date', '2nd date', 'Third date' ])
 
     // there's a th as well which we ignore for now
-    parse_row($, $('.Refuse td'), 'refuse')
+    var next_refuse = parse_row($, $('.Refuse td'), 'refuse')
     var next_recycling = parse_row($, $('.Recycling td'), 'recycling')
 
-    write_light_state(next_recycling)
+    ee.emit('newNextRecycling', next_recycling)
   })
 }
 
@@ -93,10 +100,6 @@ var get_bin_collections = function(err,data) {
   var house = json['house']
 
   console.log("Postcode:", postcode, "House:", house)
-
-  // Create the SQLite database if necessary
-  db = new sqlite3.Database('scraperwiki.sqlite')
-  db.run("CREATE TABLE IF NOT EXISTS bin_dates (type TEXT, next TEXT, PRIMARY KEY (type))")
 
   // Get the Liverpool council web page
   var url = "http://liverpool.gov.uk/bins-and-recycling/bin-collection-dates-and-times/results.aspx?housenumber=" + house + "&postcode=" + postcode + "&btnSend="
