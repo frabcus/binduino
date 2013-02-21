@@ -18,6 +18,14 @@ db.run("CREATE TABLE IF NOT EXISTS bin_dates (type TEXT, next TEXT, PRIMARY KEY 
 // Setup events framework
 var ee = new events.EventEmitter()
 
+// Error handler
+var handle_error = function(message) {
+  console.log("Error:", message)
+  request.post("https://x.scraperwiki.com/api/status", {'form': {'type':'error', 'message': "" + message} })
+}
+// Catch all uncaught exceptions
+process.on('uncaughtException', handle_error)
+
 // Write out the file which the Arduino's read - it sets:
 // - light off
 // R recycling light on
@@ -38,10 +46,10 @@ var write_bin_light_state = function(next_recycling) {
   }
   var fs = require('fs');
   fs.writeFile("http/light.state", light_bin, function(err) {
-      if(err) {
-          console.log(err);
+      if (err) {
+          return handle_error(err)
       } else {
-          console.log("Set light.state to", light_bin);
+          console.log("Set light.state to", light_bin)
       }
   }); 
 }
@@ -64,16 +72,22 @@ var parse_row = function($, row, type) {
 }
 
 // Read one whole page - which has a table of recycling collections for a house
-var parse_page = function (error, response, body) {
-  if (error || response.statusCode != 200) {
-    return console.log(err)
+var parse_page = function (err, response, body) {
+  if (err) {
+    return handle_error(err)
   } 
+  if (response.statusCode != 200) {
+    return handle_error("HTTP error: " + response.statusCode)
+  }
 
   // parse using jQuery via jsdom
   jsdom.env({
     html: body,
     scripts: [ 'http://code.jquery.com/jquery-1.5.min.js' ]
   }, function (err, window) {
+    if (err) {
+      return handle_error(err)
+    }
     var $ = window.jQuery
 
     // check header is as we expect
@@ -87,6 +101,7 @@ var parse_page = function (error, response, body) {
     var next_refuse = parse_row($, $('.Refuse td'), 'refuse')
     var next_recycling = parse_row($, $('.Recycling td'), 'recycling')
 
+    request.post("https://x.scraperwiki.com/api/status", {'form': {'type':'ok', 'message':'All is good'} })
     ee.emit('newNextRecycling', next_recycling)
   })
 }
@@ -94,7 +109,7 @@ var parse_page = function (error, response, body) {
 // Get the page with the data on from Liverpool Council
 var get_bin_collections = function(err,data) {
   if (err) {
-    return console.log(err)
+    return handle_error(err)
   }
   var json = JSON.parse(data)
   var postcode = json['postcode']
