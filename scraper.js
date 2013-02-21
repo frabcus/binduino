@@ -21,7 +21,7 @@ var ee = new events.EventEmitter()
 // Write out the file which the Arduino's read - it sets:
 // - light off
 // R recycling light on
-ee.on('newNextRecycling', function(next_recycling) {
+var write_bin_light_state = function(next_recycling) {
   // should the bin light be lit?
   next_recycling = moment(next_recycling, "YYYY-MM-DD")
   var end_range = next_recycling.clone().add("hours", 12) // stop midday of the day
@@ -44,7 +44,8 @@ ee.on('newNextRecycling', function(next_recycling) {
           console.log("Set light.state to", light_bin);
       }
   }); 
-})
+}
+ee.on('newNextRecycling', write_bin_light_state) 
 
 // Read one row of data from table
 var parse_row = function($, row, type) {
