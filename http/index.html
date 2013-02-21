@@ -24,7 +24,31 @@ h2 {
     <script src="//x.scraperwiki.com/js/scraperwiki.js"></script>
   </head>
   <body>
-    <h2>Liverpool bin collections</h2>
-	<p>Hard coded to Francis right now :) </p>
+    <h1>Liverpool bin collections</h1>
+	<p>Hard coded to Francis's house right now :) </p>
+
+    <hr>
+
+    <h2>Bin light state is <span id="byte"></span> (len <span id="byteLen"></span>)</h2>
+
+    <div id="bulb"></div>
+
+<script>
+  var state = jQuery.get("light.state", function(data) {
+    state = state.responseText
+    console.log("state", state)
+    $("#byte").text(state)
+    $("#byteLen").text(state.length)
+    if (state == "-") {
+      var img = $('<img />').attr({ 'src': 'off.png' })
+      $("#bulb").html(img)
+    } else if (state == 'R') {
+      var img = $('<img />').attr({ 'src': 'on.png' })
+      $("#bulb").html(img)
+    } else {
+      $("#bulb").empty()
+    }
+  })
+</script>
   </body>
 </html>
