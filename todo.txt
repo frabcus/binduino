@@ -1,0 +1,9 @@
+Get EL wire working
+Reduce polling rates appropriately in all places
+
+Learn about power management
+Learn about solar power
+
+Buy a shrimp to reduce cost
+http://shrimping.it/blog/bill-of-materials/
+
