@@ -101,7 +101,7 @@ var parse_page = function (err, response, body) {
     var next_refuse = parse_row($, $('.Refuse td'), 'refuse')
     var next_recycling = parse_row($, $('.Recycling td'), 'recycling')
 
-    request.post("https://x.scraperwiki.com/api/status", {'form': {'type':'ok', 'message':'All is good'} })
+    request.post("https://x.scraperwiki.com/api/status", {'form': {'type':'ok'} })
     ee.emit('newNextRecycling', next_recycling)
   })
 }
