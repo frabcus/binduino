@@ -8,7 +8,7 @@ int count = 0;
 boolean binLightOn = false;
 
 // in 10ths of a second
-int WEB_POLL_GAP = 10;
+int WEB_POLL_GAP = 100;
 
 // an LED for debugging
 void flashDebug(int c, int delayOn, int delayOff) {
