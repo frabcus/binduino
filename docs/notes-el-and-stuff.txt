@@ -1,0 +1,34 @@
+Things to buy
+-------------
+
+Power supply for arduino powering from mains
+http://playground.arduino.cc/Learning/WhatAdapter
+
+Bought
+------
+
+555 timer
+http://proto-pic.co.uk/555-timer-ic/
+
+Some toggle switches
+http://proto-pic.co.uk/dip-switch-8-position/
+http://proto-pic.co.uk/mini-push-button-switch-tall/
+
+Push to break button
+http://proto-pic.co.uk/spdt-slide-switch/
+
+EL wire
+https://www.sparkfun.com/products/9259
+
+Adrian says:
+    Take 5V out of Arduino - it will pull more than 40 milliamps
+    Use transistor
+    Voltage regulator that will turn 5V into 3V
+    Vin on the Arduino is the input power before regulating
+Then connect to one of these:
+
+Voltage regulator
+http://proto-pic.co.uk/voltage-regulator-3-3v/
+
+Inverter for EL
+http://shop.surelight.com/EL_wire_inverters_0-2metres.htm

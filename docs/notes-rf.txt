@@ -1,0 +1,64 @@
+Instructions
+------------
+
+Remote Contorl car
+http://www.timmyjones.com/index.html/?q=remote-control-var
+
+The Bin
+http://www.johnlewis.com/167693/Product.aspx?s_kwcid=ppc_pla&tmad=c&tmcampid=73&pup_ptid={adwords_producttargetid}&pup_kw={keyword}&pup_c={adtype}
+
+Debugging RX/TX thread:
+https://forum.sparkfun.com/viewtopic.php?f=13&t=22407&start=0
+
+Very inexpensive RF module tutorial
+http://hackaday.com/2012/08/19/very-inexpensive-rf-module-tutorial/
+Sparkfun tutorial
+http://www.sparkfun.com/datasheets/RF/KLP_Walkthrough.pdf
+
+RF trans/receive data sheet
+http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Wireless/General/TWS-BS-3_433.92MHz_ASK_RF_Transmitter_Module_Data_Sheet.pdf
+
+Without a microcontroller!!!
+http://itp.nyu.edu/~cm2878/crysmoore/?p=696
+
+Libraries:
+http://arduino.cc/en/Reference/SoftwareSerial (emulates a UART)
+http://www.pjrc.com/teensy/td_libs_VirtualWire.html
+
+
+Team 
+----
+
+Timmy Jones - http://www.timmyjones.com/
+
+
+Parts
+-----
+
+Transmitter, receiver
+--> http://proto-pic.co.uk/434mhz-rf-link-transmitter/
+--> http://proto-pic.co.uk/433-mhz-rf-link-receiver-4800bps/
+
+Arduino connects to bin
+??? http://shrimping.it/blog/shrimp/
+
+--> Arduino connects to the ethernet router
+--> Ethernet shield
+http://www.ebay.co.uk/itm/Ethernet-Shield-W5100-for-Arduino-Main-board-2009-UNO-/390442135119?pt=UK_Computing_Other_Computing_Networking&hash=item5ae82a2e4f
+http://www.ebay.co.uk/itm/Seeeduino-v3-0-Arduino-Clone-with-Awesome-Extra-Features-/281054605572?pt=UK_Computing_Other_Computing_Networking&hash=item417028f104
+
+Breadboard
+--> http://proto-pic.co.uk/breadboard-mini-self-adhesive/
+
+Solar power
+http://jeelabs.org/
+
+Glowing
+http://proto-pic.co.uk/purple-el-wire-0-5-metres/
+http://proto-pic.co.uk/tiny-el-inverter/
+
+Lamp and HomePlug
+
+
+
+

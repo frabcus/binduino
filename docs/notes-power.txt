@@ -1,0 +1,12 @@
+
+
+Power management
+http://playground.arduino.cc/Main/IntWithHW-PwrSup#prsoSol
+http://playground.arduino.cc/Learning/arduinoSleepCode
+
+Learn about solar power
+http://tomtor.blogspot.nl/2012/09/solar-powered-arduino-and-attiny.html
+
+Jeenode - read his blog and look for lower power stuff
+http://jeelabs.org/
+
