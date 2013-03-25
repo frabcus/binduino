@@ -1,7 +1,11 @@
 #include <VirtualWire.h>
 
 int inPin = 7;
-int ledPin = 13;
+int elPowerPin = 13;
+int elSwitchPin = 4;
+
+boolean lightState = false;
+boolean newLightState = false;
 
 //VW_MAX_MESSAGE_LEN
 uint8_t buf[1];
@@ -12,24 +16,36 @@ void setup() {
   Serial.begin(9600);
   Serial.println("setup: bin collection receiving");
 
-  pinMode(ledPin, OUTPUT);
+  pinMode(elPowerPin, OUTPUT);
   vw_set_rx_pin(inPin);
   vw_setup(600);	 // Bits per sec
   vw_rx_start();
   
+  pinMode(elSwitchPin, OUTPUT);
+  digitalWrite(elSwitchPin, LOW);
 }
 
 void loop() {
   if (vw_get_message(buf, &buflen)) { // Non-blocking
-    Serial.println( char(buf[0]));
+    Serial.print( char(buf[0]));
     Serial.println(buf[0]);
 
     // R = empty your bin!
     if (buf[0] == 'R') {
-      digitalWrite(ledPin, HIGH);
+      newLightState = true;
     } else {
-      // - = nothing
-      digitalWrite(ledPin, LOW);
+      newLightState = false;
+    }
+    if (newLightState != lightState) {
+      lightState = newLightState;
+      if (newLightState) {
+        digitalWrite(elPowerPin, HIGH);
+        digitalWrite(elSwitchPin, LOW);
+        delay(500);
+        digitalWrite(elSwitchPin, HIGH);
+      } else {
+        digitalWrite(elPowerPin, LOW);
+      }
     }
   }
 }

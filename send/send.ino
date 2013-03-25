@@ -4,10 +4,10 @@ int outputPin = 7;
 int debugPin = 8; 
 int binLightStatePin = 9;
 int debugButtonPin = 10;
-boolean debugButtonState = false;
 
 int count = 0;
 
+boolean debugButtonState = false;
 boolean binLightOn = false;
 boolean netSetup = false;
 
