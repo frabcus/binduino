@@ -2,11 +2,10 @@ Get EL wire working
 Reduce polling rates appropriately in all places
 
 Learn about power management
-http://playground.arduino.cc/Main/IntWithHW-PwrSup#prsoSol
-http://playground.arduino.cc/Learning/arduinoSleepCode
-Learn about solar power
-http://tomtor.blogspot.nl/2012/09/solar-powered-arduino-and-attiny.html
 
 Buy a shrimp to reduce cost
 http://shrimping.it/blog/bill-of-materials/
+
+
+AT TINY 45
 

@@ -1,0 +1,34 @@
+Great blog on power management
+http://hwstartup.wordpress.com/2013/03/11/how-to-run-an-arduino-on-a-9v-battery-for-weeks-or-months/
+
+Power management
+http://playground.arduino.cc/Main/IntWithHW-PwrSup#prsoSol
+http://playground.arduino.cc/Learning/arduinoSleepCode
+
+Learn about solar power
+http://tomtor.blogspot.nl/2012/09/solar-powered-arduino-and-attiny.html
+
+Jeenode - read his blog and look for lower power stuff
+http://jeelabs.org/
+
+
+JR says:
+--------
+
+Put a resistor (shunt resistor) in series with the Arduino, and measure the
+voltage across it to work out the current - and hence infer the power of the
+Arduino itself.
+
+If you set the resistor to drop the voltage by an amount between the input
+voltage and the voltage the Arduino regulator uses, it won't alter what it
+is observing.
+
+That setting is:
+~2 volts - as that is between the 5v inside the Arduino, and 12v ish that comes in it
+~0.5 amp - as that is the maximum power on a USB line etc.
+R = V / I = 2 / 0.5 - 4 ohms
+
+
+
+
+
