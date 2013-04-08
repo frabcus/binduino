@@ -22,6 +22,7 @@ var ee = new events.EventEmitter()
 var handle_error = function(message) {
   console.log("Error:", message)
   request.post("https://x.scraperwiki.com/api/status", {'form': {'type':'error', 'message': "" + message} })
+  process.exit(1)
 }
 // Catch all uncaught exceptions
 process.on('uncaughtException', handle_error)
