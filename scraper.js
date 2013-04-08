@@ -25,7 +25,9 @@ var handle_error = function(message) {
   process.exit(1)
 }
 // Catch all uncaught exceptions
-process.on('uncaughtException', handle_error)
+process.on('uncaughtException', function(error) {
+  handle_error(error.stack)
+})
 
 // Write out the file which the Arduino's read - it sets:
 // - light off
