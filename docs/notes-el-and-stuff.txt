@@ -18,7 +18,7 @@ Push to break button
 http://proto-pic.co.uk/spdt-slide-switch/
 
 EL wire
-https://www.sparkfun.com/products/9259
+http://proto-pic.co.uk/purple-el-wire-0-5-metres/
 
 Adrian says:
     Take 5V out of Arduino - it will pull more than 40 milliamps
@@ -32,3 +32,8 @@ http://proto-pic.co.uk/voltage-regulator-3-3v/
 
 Inverter for EL
 http://shop.surelight.com/EL_wire_inverters_0-2metres.htm
+- this was a pain as it has a soft switch you have to press to turn it on 
+after connecting the power. couldn't automate it
+
+Went for this inverter instead second time
+http://proto-pic.co.uk/el-electroluminescent-wire-4xaaa-pocket-inverter/
