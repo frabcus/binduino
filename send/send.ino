@@ -51,7 +51,7 @@ void loop() {
 
   // short circuit if in debug mode
   if (debugButtonState) {
-    if ((count % 2) == 1) {
+    if ((count % 8) < 7) {
       binLightOn = true;
     } 
     else {
@@ -74,8 +74,7 @@ void loop() {
   if (binLightOn) {
     digitalWrite(binLightStatePin, HIGH);
     vw_send(&b, 1);
-  } 
-  else {
+  } else {
     digitalWrite(binLightStatePin, LOW);
     vw_send(&a, 1);
   }
