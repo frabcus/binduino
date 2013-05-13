@@ -1,2 +1,2 @@
 MAILTO=francis@flourish.org
-@hourly ./tool/scraper.js
+@hourly ./tool/scraper.js > /dev/null
