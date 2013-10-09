@@ -34,6 +34,20 @@ Inverter for EL
 http://shop.surelight.com/EL_wire_inverters_0-2metres.htm
 - this was a pain as it has a soft switch you have to press to turn it on 
 after connecting the power. couldn't automate it
+- the wire with the line on it goes into the corner, the other one next to it
 
 Went for this inverter instead second time
 http://proto-pic.co.uk/el-electroluminescent-wire-4xaaa-pocket-inverter/
+
+mcknut then realised you could use a relay with the original EL wire
+device, yay
+http://uk.farnell.com/finder/32-21-7-005-2000/relay-pcb-5vdc-6a-spdt-co/dp/1329651
+
+Similar relay?
+http://proto-pic.co.uk/relay-spdt-sealed/
+
+
+
+
+
+
