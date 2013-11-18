@@ -21,8 +21,8 @@ void setup() {
   vw_setup(600);	 // Bits per sec
   vw_rx_start();
   
-  pinMode(elSwitchPin, OUTPUT);
-  digitalWrite(elSwitchPin, LOW);
+ // pinMode(elSwitchPin, OUTPUT);
+ // digitalWrite(elSwitchPin, LOW);
 }
 
 void loop() {
@@ -40,9 +40,9 @@ void loop() {
       lightState = newLightState;
       if (newLightState) {
         digitalWrite(elPowerPin, HIGH);
-        digitalWrite(elSwitchPin, LOW);
+      //  digitalWrite(elSwitchPin, LOW);
         delay(500);
-        digitalWrite(elSwitchPin, HIGH);
+      //  digitalWrite(elSwitchPin, HIGH);
       } else {
         digitalWrite(elPowerPin, LOW);
       }

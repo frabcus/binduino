@@ -51,7 +51,7 @@ void loop() {
 
   // short circuit if in debug mode
   if (debugButtonState) {
-    if ((count % 8) < 7) {
+    if ((count % 16) < 8) {
       binLightOn = true;
     } 
     else {
