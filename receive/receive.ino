@@ -2,7 +2,7 @@
 
 int inPin = 7;
 int elPowerPin = 13;
-int elSwitchPin = 4;
+int elSwitchPin = 2;
 
 boolean lightState = false;
 boolean newLightState = false;
@@ -21,8 +21,8 @@ void setup() {
   vw_setup(600);	 // Bits per sec
   vw_rx_start();
   
- // pinMode(elSwitchPin, OUTPUT);
- // digitalWrite(elSwitchPin, LOW);
+  pinMode(elSwitchPin, OUTPUT);
+  digitalWrite(elSwitchPin, LOW);
 }
 
 void loop() {
@@ -40,11 +40,20 @@ void loop() {
       lightState = newLightState;
       if (newLightState) {
         digitalWrite(elPowerPin, HIGH);
-      //  digitalWrite(elSwitchPin, LOW);
-        delay(500);
-      //  digitalWrite(elSwitchPin, HIGH);
+        
+        digitalWrite(elSwitchPin, HIGH);
+        delay(100);
+        digitalWrite(elSwitchPin, LOW);
+        delay(150);
+        digitalWrite(elSwitchPin, HIGH);
+        delay(100);
+        digitalWrite(elSwitchPin, LOW);
       } else {
         digitalWrite(elPowerPin, LOW);
+
+        digitalWrite(elSwitchPin, HIGH);
+        delay(100);
+        digitalWrite(elSwitchPin, LOW);
       }
     }
   }
