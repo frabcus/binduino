@@ -1,3 +1,6 @@
+Measuring the current draw of an Arduino project
+http://blog.cuyahoga.co.uk/2012/06/measuring-the-current-draw-of-an-arduino-project/
+
 Great blog on power management
 http://hwstartup.wordpress.com/2013/03/11/how-to-run-an-arduino-on-a-9v-battery-for-weeks-or-months/
 
@@ -5,7 +8,7 @@ Power management
 http://playground.arduino.cc/Main/IntWithHW-PwrSup#prsoSol
 http://playground.arduino.cc/Learning/arduinoSleepCode
 
-Learn about solar power
+*** Learn about solar power
 http://tomtor.blogspot.nl/2012/09/solar-powered-arduino-and-attiny.html
 
 Jeenode - read his blog and look for lower power stuff
@@ -29,6 +32,13 @@ That setting is:
 R = V / I = 2 / 0.5 - 4 ohms
 
 
+Parts
+-----
 
+DC Barrel Jack
+--> http://proto-pic.co.uk/dc-barrel-jack-adapter-female/
+
+Solar panel
+--> http://proto-pic.co.uk/solar-cell-small-0-45w/
 
 
