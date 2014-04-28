@@ -13,7 +13,15 @@ Also look at the sleep library in the JeeLib
 http://tomtor.blogspot.nl/2012/09/solar-powered-arduino-and-attiny.html
 
 Jeenode - read his blog and look for lower power stuff
-http://jeelabs.org/
+http://jeelabs.org/tag/solar/
+** http://jeelabs.org/2013/02/11/solar-fingernails/
+    AA power board
+    http://www.digitalsmarties.net/products/aa-power-board
+
+Adafruit solar Lithium charger 
+https://www.adafruit.com/products/390
+    Tutorial
+    https://learn.adafruit.com/usb-dc-and-solar-lipoly-charger
 
 
 JR says:
